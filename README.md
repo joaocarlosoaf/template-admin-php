@@ -1,28 +1,30 @@
-# Laravel 8.75 + ReactJS 18.2.0 + CoreUI Admin
+# Docker  + Laravel 8.75 + ReactJS 18.2.0 + CoreUI Admin
 
 This project has Laravel 8.75, ReactJS 18.2.0 and CoreUI Admin:
 
+- [Docker](https://www.docker.com/)
 - [Laravel](https://laravel.com/docs/).
 - [ReactJS](https://react.dev/).
 - [CoreUI Admin](https://coreui.io/product/free-react-admin-template/).
 
 
-## Install Dependencies
+## Build Docker
 
-Install dependencies ReactJS:
+Build App imagem docker:
 
-    npm i
+    docker-compose build
 
-Install dependencies Laravel:
+Run App docker:
 
-    composer install
+    docker-compose up -d
 
-## Run Project
+## Configuration for Develop
 
-Run ReactJS:
+Run debug server laravel:
 
-    npm run watch
+    docker-compose exec laravel sh -c "php artisan serve --host=0.0.0.0 --port=8000"
 
-Run Laravel:
+Run debug and hot reload reactJS:
 
-    php artisan server
+    docker-compose exec laravel sh -c "npm run hot"
+

@@ -11,8 +11,24 @@ const mix = require('laravel-mix');
  |
  */
 
+const phpServiceName = process.env.PHP_SERVICE_NAME || 'localhost';
+const phpServicePort = process.env.PHP_SERVICE_PORT || '8000';
+
+mix.webpackConfig({
+    devServer: {
+        host: '0.0.0.0',
+        port: '8080',
+        proxy: {
+            '**': {
+                target: `http://${phpServiceName}:${phpServicePort}`,
+                changeOrigin: true,
+            },
+        },
+    },
+});
+
 mix.postCss('resources/css/app.css', 'public/css', [
     //
 ]);
 
-mix.js('resources/js/index.js', 'public/js').react();
+mix.js('resources/js/app.js', 'public/js').react();
