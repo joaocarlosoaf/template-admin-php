@@ -10,17 +10,17 @@ services:
       - .:/var/www
       - ./storage:/var/www/storage
     environment:
-      - APP_ENV=local
-      - APP_DEBUG=true
-      - APP_KEY=base64:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX=
-      - DB_CONNECTION=pgsql
-      - DB_HOST=db
-      - DB_PORT=5432
-      - DB_DATABASE=intelliform
-      - DB_USERNAME=intelliform
-      - DB_PASSWORD=123456
-      - PHP_SERVICE_NAME=laravel
-      - PHP_SERVICE_PORT=8000
+      APP_ENV: 'local'
+      APP_DEBUG: '1'
+      APP_KEY: 'base64:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX='
+      DB_CONNECTION: 'pgsql'
+      DB_HOST: 'db'
+      DB_PORT: '5432'
+      DB_DATABASE: 'intelliform'
+      DB_USERNAME: 'postgres'
+      DB_PASSWORD: 'postgres'
+      PHP_SERVICE_NAME: 'laravel'
+      PHP_SERVICE_PORT: '8000'
     depends_on:
       - db
     ports:
@@ -32,14 +32,14 @@ services:
       - intelliform
 
   db:
-    image: postgres:13
+    image: postgres:13.10
     container_name: postgres_db
     environment:
       - POSTGRES_DB=intelliform
-      - POSTGRES_USER=intelliform
-      - POSTGRES_PASSWORD=123456
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - pgdata:/var/lib/postgresql
     ports:
       - '5432:5432'
     networks:

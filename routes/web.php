@@ -17,5 +17,5 @@ Route::get('/', function () {
     return view('app');
 });
 
-Route::get('/login', [LoginController::class, 'index']);
-Route::post('/login', [LoginController::class, 'login']);
+// Route::get('/login', [LoginController::class, 'index']);
+// Route::post('/login', [LoginController::class, 'login']);

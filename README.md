@@ -28,3 +28,17 @@ Run debug and hot reload reactJS:
 
     docker-compose exec laravel sh -c "npm run hot"
 
+
+## Execução via .sh
+
+Primeiro instale o tmux:
+
+    sudo apt install tmux
+
+Depois certifique que o arquivo "dev-tool.sh" tem permissão de execução:
+
+    chmod +x dev-tool.sh
+
+Agora basta executar o script de inicialização:
+
+    ./dev-tool.sh
