@@ -18,7 +18,7 @@ Run App docker:
 
     docker-compose up -d
 
-## Configuration for Develop
+## Run by docker-compose
 
 Run debug server laravel:
 
@@ -28,3 +28,17 @@ Run debug and hot reload reactJS:
 
     docker-compose exec laravel sh -c "npm run hot"
 
+
+## Or run by .sh
+
+Install tmux:
+
+    sudo apt install tmux
+
+Then make sure that the "start-app.sh" file has execution permission:
+
+    chmod +x start-app.sh
+
+Now just run the startup script:
+
+    ./start-app.sh
