@@ -5,7 +5,7 @@ services:
     build:
       context: .
       dockerfile: Laravel.Dockerfile
-    container_name: laravel_app
+    container_name: laravel_app_v1
     volumes:
       - .:/var/www
       - ./storage:/var/www/storage

@@ -18,7 +18,7 @@ Run App docker:
 
     docker-compose up -d
 
-## Configuration for Develop
+## Run by docker-compose
 
 Run debug server laravel:
 
