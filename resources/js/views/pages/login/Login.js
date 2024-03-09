@@ -1,5 +1,5 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useContext, useEffect, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import {
   CButton,
   CCard,
@@ -15,8 +15,51 @@ import {
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import { cilLockLocked, cilUser } from '@coreui/icons'
+import LoginService from '../../../services/login';
+import { Alert } from 'react-bootstrap'
+import AuthContext from '../../../contexts/AuthContext'
+
 
 const Login = () => {
+
+  const { login } = useContext(AuthContext);
+
+  const navigate = useNavigate();
+
+  const [userName, setUserName] = useState('');
+  const [password, setPassword] = useState('');
+  const [showLoginError, setShowLoginError] = useState(false);
+  
+
+  const handleLogin = async () => {
+
+    let data = {
+      user_name: userName,
+      password: password
+    }
+
+    try {
+
+      let result = await LoginService.login(data);
+      console.log(result.data.data);
+      login(JSON.stringify(result.data.data.user), result.data.data.access_token);
+      navigate('/dashboard');
+
+    } catch (error) {
+
+      setShowLoginError(true);
+      console.log(error);
+      
+    }
+
+  }
+
+  useEffect(() => {
+      if(localStorage.getItem('token')) {
+        navigate('/dashboard');
+      }
+  }, [])
+
   return (
     <div className="bg-light min-vh-100 d-flex flex-row align-items-center">
       <CContainer>
@@ -27,12 +70,17 @@ const Login = () => {
                 <CCardBody>
                   <CForm>
                     <h1>Login</h1>
-                    <p className="text-medium-emphasis">Sign In to your account</p>
+                    <p className="text-medium-emphasis">Faça login em sua conta</p>
                     <CInputGroup className="mb-3">
                       <CInputGroupText>
                         <CIcon icon={cilUser} />
                       </CInputGroupText>
-                      <CFormInput placeholder="Username" autoComplete="username" />
+                      <CFormInput 
+                        placeholder="Usuário" 
+                        autoComplete="username"
+                        value={userName}
+                        onChange={(e) => setUserName(e.target.value)} 
+                      />
                     </CInputGroup>
                     <CInputGroup className="mb-4">
                       <CInputGroupText>
@@ -40,23 +88,31 @@ const Login = () => {
                       </CInputGroupText>
                       <CFormInput
                         type="password"
-                        placeholder="Password"
+                        placeholder="Senha"
                         autoComplete="current-password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
                       />
                     </CInputGroup>
                     <CRow>
                       <CCol xs={6}>
-                        <CButton color="primary" className="px-4">
-                          Login
+                        <CButton color="primary" className="px-4" onClick={handleLogin}>
+                          Entrar
                         </CButton>
                       </CCol>
                       <CCol xs={6} className="text-right">
                         <CButton color="link" className="px-0">
-                          Forgot password?
+                          Esqueceu a senha?
                         </CButton>
                       </CCol>
                     </CRow>
                   </CForm>
+                  {
+                    showLoginError &&
+                    <Alert className='mt-2' variant='danger' onClose={() => setShowLoginError(false)} dismissible>
+                      Usuário ou senha inválidos!
+                    </Alert>
+                  }
                 </CCardBody>
               </CCard>
               <CCard className="text-white bg-primary py-5" style={{ width: '44%' }}>
@@ -64,12 +120,11 @@ const Login = () => {
                   <div>
                     <h2>Sign up</h2>
                     <p>
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                      tempor incididunt ut labore et dolore magna aliqua.
+                      Caso esteja enfrentando problemas com o login, entre em contato no botão abaixo.
                     </p>
                     <Link to="/register">
                       <CButton color="primary" className="mt-3" active tabIndex={-1}>
-                        Register Now!
+                        Suporte
                       </CButton>
                     </Link>
                   </div>
@@ -83,4 +138,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default Login;

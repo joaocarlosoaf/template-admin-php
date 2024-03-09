@@ -25,3 +25,11 @@ Route::middleware('auth:api')->group(function () {
 
 Route::post('/register', [App\Http\Controllers\AuthController::class, 'register']);
 Route::post('/login', [App\Http\Controllers\AuthController::class, 'login']);
+
+Route::prefix('inscription')->group(function () {
+    Route::post('/login', [App\Http\Controllers\AuthController::class, 'login']);
+});
+
+Route::prefix('admin')->group(function () {
+    Route::post('/login', [App\Http\Controllers\AuthController::class, 'login']);
+});

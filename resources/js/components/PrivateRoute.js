@@ -5,7 +5,7 @@ import AuthContext from '../contexts/AuthContext'
 
 const ProtectedComponentWrapper = ({ isAuthenticated }) => {
   if (!isAuthenticated) {
-    return <Navigate to="/#/login" />
+    return <Navigate to="/#/admin" />
   }
   return <Outlet />
 }

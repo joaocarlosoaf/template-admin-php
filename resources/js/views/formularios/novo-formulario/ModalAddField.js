@@ -13,7 +13,7 @@ const ModalAddField = (props) => {
 
     const [name, setName] = useState('');
     const [placeHolder, setPlaceHolder] = useState('');
-    const [type, setType] = useState('');
+    const [type, setType] = useState('text');
     const [required, setRequired] = useState(false);
     const [options, setOptions] = useState('');
 
@@ -49,13 +49,13 @@ const ModalAddField = (props) => {
 
                     <CForm className="row g-3">
                         <CCol md={6}>
-                            <CFormInput type="text" id="namelId" label="Nome" onChange={(e) => setName(e.target.value)} />
+                            <CFormInput type="text" id="namelId" label="Nome do campo" onChange={(e) => setName(e.target.value)} />
                         </CCol>
                         <CCol md={6}>
-                            <CFormInput type="text" id="placeHolderId" label="Place Holder" onChange={(e) => setPlaceHolder(e.target.value)}/>
+                            <CFormInput type="text" id="placeHolderId" label="Placeholder" onChange={(e) => setPlaceHolder(e.target.value)}/>
                         </CCol>
                         <CCol md={6}>
-                            <CFormSelect id="inputState" label="State" onChange={(e) => setType(e.target.value)}>
+                            <CFormSelect id="inputState" label="Tipo do campo" onChange={(e) => setType(e.target.value)}>
                                 <option value="text">Texto</option>
                                 <option value="number">Número</option>
                                 <option value="date">Data</option>

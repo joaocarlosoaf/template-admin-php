@@ -1,10 +1,10 @@
 FROM node:16
 
 # Criar diretório da aplicação
-WORKDIR /app
+WORKDIR /var/www
 
 # Copiar package.json e package-lock.json
-COPY package*.json ./
+COPY package*.json .
 
 # Instalar dependências
 RUN npm install

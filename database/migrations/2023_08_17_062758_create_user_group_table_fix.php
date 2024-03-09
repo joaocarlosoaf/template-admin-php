@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
-class AddUserGroup extends Migration
+class CreateUserGroupTableFix extends Migration
 {
     /**
      * Run the migrations.
@@ -16,20 +16,18 @@ class AddUserGroup extends Migration
     {
         Schema::create('user_groups', function (Blueprint $table) {
             $table->id();
-            $table->string('id');
             $table->string('name');
             $table->timestamps();
         });
-        DB::table('user_groups')->insert(
-            array(
-                'name' => 'admin'
-            ),
-            array(
-                'name' => 'user'
-            )
-        );
+        DB::table('user_groups')->insert([
+            ['name' => 'admin'],
+            ['name' => 'user'],
+            ['name' => 'applicant'],
+            ['name' => 'guest']
+        ]);
         Schema::table('users', function (Blueprint $table) {
-            $table->boolean('user_group_id')->default(2);
+            $table->unsignedBigInteger('user_group_id')->default(3);
+            $table->foreign('user_group_id')->references('id')->on('user_groups');
         });
     }
 
@@ -40,6 +38,6 @@ class AddUserGroup extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_groups');
+        Schema::dropIfExists('user_group');
     }
 }

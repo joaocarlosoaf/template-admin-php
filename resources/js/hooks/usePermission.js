@@ -24,7 +24,7 @@ const usePermission = () => {
 
   const canAccess = (perfisAcesso) => {
     return perfisAcesso.includes(
-      perfisAcessoMap[usuarioLogado?.co_perfil_acesso]
+      perfisAcessoMap[usuarioLogado?.user_group_id]
     );
   };
 

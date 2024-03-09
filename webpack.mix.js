@@ -27,6 +27,12 @@ mix.webpackConfig({
     },
 });
 
+mix.override(webpackConfig => {
+    webpackConfig.stats = webpackConfig.stats || {};
+    webpackConfig.stats.warningsFilter = warning => 
+        !(/list-group-item-variant\(\) has been deprecated/.test(warning));
+});
+
 mix.postCss('resources/css/app.css', 'public/css', [
     //
 ]);

@@ -17,18 +17,16 @@ class AuthController extends BaseController
 
             $validatedData = $request->validate([
                 'name' => 'required|max:55',
+                'user_name' => 'required|max:55',
                 'email' => 'required|email|unique:users',
-                'password' => 'required'
+                'password' => 'required',
+                'user_group_id' => 'required'
             ]);
     
             $validatedData['password'] = bcrypt($request->password);
     
             $user = User::create($validatedData);
-            $userGroup = UserGroup::create([
-                'user_id' => $user->id,
-                'group_id' => 1
-            ]);
-    
+
             $accessToken = $user->createToken('authToken')->accessToken;
             
             return $this->sendResponse([ 'user' => $user, 'access_token' => $accessToken], 'User created!', 201);
@@ -36,7 +34,7 @@ class AuthController extends BaseController
         } catch (\Illuminate\Validation\ValidationException $e) {
             return $this->sendError($e->errors(), 422);
         } catch (\Throwable $th) {
-            error_log($th);
+            throw ($th);
             return $this->sendError('Error', 500);
         }
        
@@ -47,11 +45,14 @@ class AuthController extends BaseController
         try {
             $validatedData = $request->validate([
                 'name' => 'required|max:55',
-                'email' => 'required|email'
+                'user_name' => 'required|max:55',
+                'email' => 'required|email',
+                'user_group_id' => 'required'
             ]);
 
             $user = User::find($id);
             $user->name = $validatedData['name'];
+            $user->user_name = $validatedData['user_name'];
             $user->email = $validatedData['email'];
             $user->save();
 
@@ -72,11 +73,11 @@ class AuthController extends BaseController
         try {
             
             $loginData = $request->validate([
-                'email' => 'required|email',
+                'user_name' => 'required',
                 'password' => 'required'
             ]);
             if (!auth()->attempt($loginData)) {
-                return $this->sendError('Invalid credentials', 500);
+                return $this->sendError('Invalid credentials', 200);
             }
     
             $tokenResult = auth()->user()->createToken('authToken', ['admin', 'user']);
@@ -92,7 +93,7 @@ class AuthController extends BaseController
             return $this->sendError($e->errors(), 422);
         } catch (\Throwable $th) {
             error_log($th);
-            return $this->sendError('Error', 500);
+            return $this->sendError($th, 500);
         }
 
        

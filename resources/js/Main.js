@@ -15,6 +15,7 @@ const loading = (
 const DefaultLayout = React.lazy(() => import('./layout/DefaultLayout'))
 
 // Pages
+const RegistrationForm = React.lazy(() => import('./views/registration/RegistrationForm'))
 const Login = React.lazy(() => import('./views/pages/login/Login'))
 const Register = React.lazy(() => import('./views/pages/register/Register'))
 const Page404 = React.lazy(() => import('./views/pages/page404/Page404'))
@@ -25,13 +26,14 @@ const RoutesComponent = () => {
   const { isAuthenticated } = useContext(AuthContext)
 
   const mainRoutes = [
-    { path: '/login', element: isAuthenticated ? <Navigate to="/" /> : <Login /> },
+    { path: '/', element: <RegistrationForm /> },
+    { path: '/admin', element: isAuthenticated ? <Navigate to="/dashboard" /> : <Login /> },
     { path: '/register', element: <Register /> },
     { path: '/404', element: <Page404 /> },
     { path: '/500', element: <Page500 /> },
     {
       path: '/',
-      element: isAuthenticated ? <DefaultLayout /> : <Navigate to="/login" />,
+      element: isAuthenticated ? <DefaultLayout /> : <Navigate to="/admin" />,
       children: routes.map((route) => ({
         ...route,
         path: '/' + route.path,

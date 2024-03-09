@@ -56,13 +56,14 @@ const TableFieldsComponent = (props) => {
     
     const deleteField = (index) => {
         Swal.fire({
-            title: 'Tem certeza?',
-            text: "Você não poderá reverter essa ação!",
+            title: 'Confirma?',
+            text: "O campo será deletado desta etapa da inscrição!",
             icon: 'warning',
             showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Sim, deletar!'
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Deletar',
+            cancelButtonText: 'Cancelar'
         }).then((result) => {
             if (result.isConfirmed) {
                 removeField(stepIndex, index);
@@ -88,7 +89,7 @@ const TableFieldsComponent = (props) => {
                             <CTableDataCell>{field.type}</CTableDataCell>
                             <CTableDataCell>{(field.required)? 'Sim' : 'Não'}</CTableDataCell>
                             <CTableDataCell>
-                                <CTooltip content="Tooltip text">
+                                {/* <CTooltip content="Tooltip text">
                                     <a href="#" onClick={() => {event.preventDefault(); showOptions(field)}}>
                                     <FontAwesomeIcon role="button" style={{ marginRight: '2pt' }}
                                     className="mr-2" icon={faEye}/>
@@ -97,10 +98,10 @@ const TableFieldsComponent = (props) => {
                                 </CTooltip>
                                 <CTooltip content="Tooltip text">
                                     <FontAwesomeIcon role="button" style={{ marginRight: '2pt' }} className="mr-2" icon={faPenToSquare} />
-                                </CTooltip>
+                                </CTooltip> */}
                                 <CTooltip content="Tooltip text">
                                     <a href="#" onClick={() => {event.preventDefault(); deleteField(index)}}>
-                                        <FontAwesomeIcon role="button" style={{ marginRight: '2pt' }} className="mr-2" icon={faTrash} />
+                                        <FontAwesomeIcon role="button" color="red" style={{ marginRight: '2pt' }} className="mr-2" icon={faTrash} />
                                     </a>
                                 </CTooltip>
                             </CTableDataCell>
